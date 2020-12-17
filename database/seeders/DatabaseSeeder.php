@@ -14,7 +14,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        /* DB::table('types')->insert([
+        DB::table('types')->insert([
             'name' => 'money',
             'status' => 1
         ]);
@@ -38,7 +38,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'ticket',
             'status' => 1
         ]);
-        */
+
 
 
     }

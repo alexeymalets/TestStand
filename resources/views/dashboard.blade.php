@@ -10,4 +10,29 @@
             <a href="{{route('lottery')}}">Получить приз</a>
         </div>
     </div>
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <table>
+                <tbody>
+                    @foreach($wins as $win)
+                        <tr>
+                            <td>
+                                {{$win->id}}
+                            </td>
+                            <td>
+                                {{$win->type->name}}
+                            </td>
+                            <td>
+                                @if($win->type->name == 'object')
+                                    {{$win->prize->name}}
+                                @else
+                                    {{$win->value}}
+                                @endif
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
 </x-app-layout>
