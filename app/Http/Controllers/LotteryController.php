@@ -12,9 +12,9 @@ class LotteryController extends Controller
 {
     public function index()
     {
-        $wins = Auth::user()->wins()->get();
+        $user = Auth::user();
 
-        return view('dashboard', compact('wins'));
+        return view('dashboard', compact('user'));
     }
 
     public function lottery()
@@ -37,11 +37,18 @@ class LotteryController extends Controller
 
             $prize = rand($min, $max);
 
+            $user = Auth::user();
+
+            $bonus = $user->bonus + $prize;
+
+            $user->bonus = $bonus;
+
+            $user->save();
+
         }elseif ($type->name == 'object'){
             $objects = PrizeObject::where('status', 1)->get();
 
             $prize = $objects->random(1)->first();
-
         }
 
         if($type->name == 'object') {

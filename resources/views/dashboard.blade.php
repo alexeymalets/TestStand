@@ -7,14 +7,15 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            У Вас бонусов: {{$user->bonus}}
+        </div>
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <a href="{{route('lottery')}}">Получить приз</a>
         </div>
-    </div>
-    <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <table>
                 <tbody>
-                    @foreach($wins as $win)
+                    @foreach($user->wins()->get() as $win)
                         <tr>
                             <td>
                                 {{$win->id}}
@@ -34,5 +35,4 @@
                 </tbody>
             </table>
         </div>
-    </div>
 </x-app-layout>
