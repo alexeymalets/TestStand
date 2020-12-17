@@ -17,8 +17,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+Route::get('/dashboard', [\App\Http\Controllers\LotteryController::class, 'index'])->middleware(['auth'])->name('dashboard');
+
+Route::get('/lottery', [\App\Http\Controllers\LotteryController::class, 'lottery'])->middleware(['auth'])->name('lottery');
 
 require __DIR__.'/auth.php';

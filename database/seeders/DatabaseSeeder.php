@@ -25,7 +25,20 @@ class DatabaseSeeder extends Seeder
         DB::table('types')->insert([
             'name' => 'object',
             'status' => 1
-        ]);*/
+        ]);
+        DB::table('prize_objects')->insert([
+            'name' => 'house',
+            'status' => 1
+        ]);
+        DB::table('prize_objects')->insert([
+            'name' => 'car',
+            'status' => 1
+        ]);
+        DB::table('prize_objects')->insert([
+            'name' => 'ticket',
+            'status' => 1
+        ]);
+        */
 
 
     }
