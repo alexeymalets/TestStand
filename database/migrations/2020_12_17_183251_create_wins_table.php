@@ -18,6 +18,7 @@ class CreateWinsTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('type_id');
             $table->string('value', 45);
+            $table->integer('status');
             $table->timestamps();
 
 

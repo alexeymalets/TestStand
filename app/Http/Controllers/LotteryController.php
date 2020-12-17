@@ -24,6 +24,7 @@ class LotteryController extends Controller
         $type = $types->random(1)->first();
 
         if($type->name == 'money'){
+            $status = 0;
 
             $min = 1;
             $max = 1000;
@@ -31,6 +32,7 @@ class LotteryController extends Controller
             $prize = rand($min, $max);
 
         }elseif ($type->name == 'bonus'){
+            $status = 1;
 
             $min = 10000;
             $max = 100000;
@@ -46,6 +48,7 @@ class LotteryController extends Controller
             $user->save();
 
         }elseif ($type->name == 'object'){
+
             $objects = PrizeObject::where('status', 1)->get();
 
             $prize = $objects->random(1)->first();
@@ -56,7 +59,8 @@ class LotteryController extends Controller
                 array(
                     'user_id' => Auth::id(),
                     'type_id' => $type->id,
-                    'value' => $prize->id
+                    'value' => $prize->id,
+                    'status' => 0
                 )
             );
         }else{
@@ -64,11 +68,32 @@ class LotteryController extends Controller
                 array(
                     'user_id' => Auth::id(),
                     'type_id' => $type->id,
-                    'value' => $prize
+                    'value' => $prize,
+                    'status' => $status
                 )
             );
         }
 
         return view('lottery', compact('type', 'prize'));
+    }
+
+    public function convert(Win $win){
+        if($win->type->name == 'money' && $win->status == 0){
+            $percent = 9;
+
+            $user = Auth::user();
+
+            $bonus = $user->bonus + ($win->value*(1+$percent));
+
+            $user->bonus = $bonus;
+
+            $user->save();
+
+            $win->status = 1;
+
+            $win->save();
+        }
+
+        return redirect()->route('dashboard');
     }
 }

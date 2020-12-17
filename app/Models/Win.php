@@ -9,7 +9,7 @@ class Win extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'type_id', 'value'];
+    protected $fillable = ['user_id', 'type_id', 'value', 'status'];
 
     public function type()
     {

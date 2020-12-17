@@ -21,4 +21,7 @@ Route::get('/dashboard', [\App\Http\Controllers\LotteryController::class, 'index
 
 Route::get('/lottery', [\App\Http\Controllers\LotteryController::class, 'lottery'])->middleware(['auth'])->name('lottery');
 
+Route::get('/convert/{win}', [\App\Http\Controllers\LotteryController::class, 'convert'])->middleware(['auth'])->name('convert');
+
+
 require __DIR__.'/auth.php';
