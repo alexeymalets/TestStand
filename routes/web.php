@@ -23,5 +23,9 @@ Route::get('/lottery', [\App\Http\Controllers\LotteryController::class, 'lottery
 
 Route::get('/convert/{win}', [\App\Http\Controllers\LotteryController::class, 'convert'])->middleware(['auth'])->name('convert');
 
+Route::get('/refund/{win}', [\App\Http\Controllers\LotteryController::class, 'refund'])->middleware(['auth'])->name('refund');
+
+Route::post('/refund/{win}/store', [\App\Http\Controllers\LotteryController::class, 'refundStore'])->middleware(['auth'])->name('refund.store');
+
 
 require __DIR__.'/auth.php';

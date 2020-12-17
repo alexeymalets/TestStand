@@ -33,7 +33,8 @@
                             <td>
                                 @if($win->status == 0)
                                     @if($win->type->name == 'money')
-                                        <a href="{{route('convert', $win)}}">Конвертировать</a>
+                                        <a href="{{route('convert', $win)}}">Конвертировать</a> |
+                                        <a href="{{route('refund', $win)}}">Вывести</a>
                                     @endif
                                 @endif
                             </td>

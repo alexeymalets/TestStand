@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\PrizeObject;
+use App\Models\Refund;
 use App\Models\Type;
 use App\Models\Win;
 use Illuminate\Http\Request;
@@ -23,7 +24,8 @@ class LotteryController extends Controller
 
         $type = $types->random(1)->first();
 
-        if($type->name == 'money'){
+        if($type->name == 'money')
+        {
             $status = 0;
 
             $min = 1;
@@ -31,7 +33,8 @@ class LotteryController extends Controller
 
             $prize = rand($min, $max);
 
-        }elseif ($type->name == 'bonus'){
+        }elseif ($type->name == 'bonus')
+        {
             $status = 1;
 
             $min = 10000;
@@ -47,14 +50,16 @@ class LotteryController extends Controller
 
             $user->save();
 
-        }elseif ($type->name == 'object'){
+        }elseif ($type->name == 'object')
+        {
 
             $objects = PrizeObject::where('status', 1)->get();
 
             $prize = $objects->random(1)->first();
         }
 
-        if($type->name == 'object') {
+        if($type->name == 'object')
+        {
             Win::create(
                 array(
                     'user_id' => Auth::id(),
@@ -77,8 +82,10 @@ class LotteryController extends Controller
         return view('lottery', compact('type', 'prize'));
     }
 
-    public function convert(Win $win){
-        if($win->type->name == 'money' && $win->status == 0){
+    public function convert(Win $win)
+    {
+        if($win->type->name == 'money' && $win->status == 0)
+        {
             $percent = 9;
 
             $user = Auth::user();
@@ -96,4 +103,37 @@ class LotteryController extends Controller
 
         return redirect()->route('dashboard');
     }
+
+    public function refund(Win $win)
+    {
+        if($win->type->name == 'money' && $win->status == 0)
+        {
+            return view('refund', compact('win'));
+        }else{
+            return redirect()->route('dashboard');
+        }
+    }
+
+    public function refundStore(Win $win)
+    {
+        if($win->type->name == 'money' && $win->status == 0)
+        {
+            Refund::create(
+                array(
+                    'user_id' => Auth::id(),
+                    'win_id' => $win->id,
+                    'card' => request()->post()['card'],
+                    'status' => 0
+                )
+            );
+
+            $win->status = 1;
+
+            $win->save();
+        }
+
+        return redirect()->route('dashboard');
+    }
+
+
 }
