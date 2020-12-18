@@ -30,11 +30,9 @@ class ConvertTest extends TestCase
 
         foreach ($user->wins as $win){
             if($win->type->name == 'money') {
-
                 $bonus = $user->bonus;
 
                 $this->actingAs($user)->get(route('convert', $win));
-                print_r($user->bonus);
 
                 if($user->bonus != ($bonus+$win->value*(10))){
                     $this->assertTrue(false);
